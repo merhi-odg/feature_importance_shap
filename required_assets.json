@@ -8,7 +8,7 @@
     },
     {
         "usage": "ADDITIONAL_ASSET",
-        "name": ".*\\.pkl",
+        "name": ".*\\.pickle",
         "filename": "shap_explainer.pickle",
         "metaData": {
             "description": "Pre-trained SHAP explainer"
@@ -16,7 +16,7 @@
     },
     {
         "usage": "ADDITIONAL_ASSET",
-        "name": ".*\\.pkl",
+        "name": ".*\\.pickle",
         "filename": "predictive_features.pickle",
         "metaData": {
             "description": "List of predictive features as used by scoring model"
