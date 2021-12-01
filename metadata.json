@@ -1,0 +1,11 @@
+{
+    "tags": [],
+    "name": "SHAP Explainer: Feature Importance",
+    "description": "Model to compute Feature Importance using SHAP Values",
+    "modelCategory": "MODEL_MONITORING_MODEL",
+    "defaultAssociationRole": "PERFORMANCE_MODEL",
+    "frequentlyUsed": true,
+    "custom": {
+        "modelopPackageVersion": "0.13.0"
+    }
+}
