@@ -2,15 +2,15 @@ import pandas
 import numpy
 import pickle
 import shap
-import modelop.utils as utils
+import logging
 
-logger = utils.configure_logger()
+logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 # modelop.init
 def begin():
 
-    global predictive_features
-    global shap_explainer
+    global predictive_features, shap_explainer
 
     # Load pickled predictive feature list
     predictive_features = pickle.load(open("predictive_features.pickle", "rb"))
@@ -22,32 +22,25 @@ def begin():
 
 
 # modelop.metrics
-def metrics(dataframe):
-    
-    # Dictionary to hold final metrics
-    metrics = {}
+def metrics(dataframe: pandas.DataFrame) -> dict:
 
     # Getting dummies for shap values
     data_processed = preprocess(dataframe)[predictive_features]
 
-    # Assigning metrics to output dictionary
-    metrics["interpretability"] = [compute_feature_importance(data_processed)]
-
-    yield metrics
+    # Returning metrics
+    return {"interpretability": [compute_feature_importance(data_processed)]}
 
 
 def preprocess(data: pandas.DataFrame) -> pandas.DataFrame:
-    """[summary]
-    TODO
+    """Function to One-Hot-Encode input data
     Args:
-        data (pandas.DataFrame): [description]
-
+        data (pandas.DataFrame): input data.
     Returns:
-        pandas.DataFrame: [description]
+        pandas.DataFrame: OHE version of input dataframe.
     """
 
     data_processed = data.copy(deep=True)
-    
+
     # One-Hot encode data with pd.get_dummies()
     data_processed = pandas.get_dummies(data_processed)
 
@@ -60,14 +53,12 @@ def preprocess(data: pandas.DataFrame) -> pandas.DataFrame:
     return data_processed
 
 
-def compute_feature_importance(data:pandas.DataFrame) -> dict:
-    """[summary]
-    TODO
+def compute_feature_importance(data: pandas.DataFrame) -> dict:
+    """A function to compute feature importance using pre-trained SHAP explainer.
     Args:
-        data (pandas.DataFrame): [description]
-
+        data (pandas.DataFrame): OHE input data.
     Returns:
-        dict: [description]
+        dict: SHAP metrics.
     """
 
     # Getting SHAP values
